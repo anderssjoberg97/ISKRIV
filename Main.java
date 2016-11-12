@@ -1,3 +1,8 @@
+package anderssjoberg.maze;
+
+import anderssjoberg.maze.generation.MazeGenerator;
+import anderssjoberg.maze.Maze;
+
 public class Main{
     private MazeGenerator mazeGenerator;
     public static void main(String[] args){
@@ -10,14 +15,9 @@ public class Main{
     }
 
     private void generateMaze(){
-        int SIZE_X = 64;
-        int SIZE_Y = 64;
-        int DISTANCE = 10;
-        byte CHANCE = 15;
-        Maze maze;
-        do {
-            maze = mazeGenerator.generateMaze(SIZE_X, SIZE_Y, CHANCE, DISTANCE);
-        } while(maze == null);
+        int SIZE_X = 128;
+        int SIZE_Y = 128;
+        Maze maze = mazeGenerator.generateMaze(SIZE_X, SIZE_Y);
         printMaze(maze);
     }
 

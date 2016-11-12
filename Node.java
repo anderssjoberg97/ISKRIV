@@ -1,3 +1,9 @@
+package anderssjoberg.maze;
+
+/**
+ * Class which represents nodes
+ * @author Anders Sjöberg
+ */
 public class Node{
     private final int x, y;
     private boolean visited;
@@ -7,6 +13,7 @@ public class Node{
      * Class constructor
      * @param x X
      * @param y Y
+     * @param blocked True if blocked otherwise false
      */
     public Node(int x, int y, boolean blocked){
         this.x = x;

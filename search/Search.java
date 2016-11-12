@@ -1,3 +1,5 @@
+package anderssjoberg.maze.search;
+
 /**
  * A abstract class for search algorithms
  */

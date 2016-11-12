@@ -1,5 +1,8 @@
+package anderssjoberg.maze;
+
 /**
  * Class which stores mazes
+ * @author Anders Sjöberg
  */
 public class Maze{
     private Node start, goal;

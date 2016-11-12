@@ -1,4 +1,9 @@
+package anderssjoberg.maze.search;
+
 import java.util.Stack;
+
+import anderssjoberg.maze.Maze;
+import anderssjoberg.maze.Node;
 
 /**
  * Depth first search
@@ -28,14 +33,7 @@ public class DepthFirstSearch implements Search{
 
 
         //Start searching stack
-        long timeStart = System.nanoTime();
         while(!stack.empty()){
-            //Check if search has taken too long
-            if(System.nanoTime() - timeStart > 100_000){
-                System.out.println("Too long");
-            } else {
-                //System.out.println("Time: " + (System.nanoTime() - timeStart));
-            }
             Node node = stack.pop();
 
             if(!node.isVisited() && !node.isBlocked()){

@@ -1,4 +1,9 @@
+package anderssjoberg.maze.search;
+
 import java.util.LinkedList;
+
+import anderssjoberg.maze.Maze;
+import anderssjoberg.maze.Node;
 
 /**
  * Depth first search
