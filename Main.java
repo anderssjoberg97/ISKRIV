@@ -12,8 +12,8 @@ public class Main{
     private void generateMaze(){
         int SIZE_X = 64;
         int SIZE_Y = 64;
-        int DISTANCE = 50;
-        byte CHANCE = 40;
+        int DISTANCE = 10;
+        byte CHANCE = 15;
         Maze maze;
         do {
             maze = mazeGenerator.generateMaze(SIZE_X, SIZE_Y, CHANCE, DISTANCE);

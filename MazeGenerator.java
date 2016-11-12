@@ -35,13 +35,34 @@ public class MazeGenerator{
         }
 
         //Values for starting point and goal
-        ArrayList<Node> startCandidates = new ArrayList<>();
+        ArrayList<Node> startCandidates = new ArrayList<>(),
+            goalCandidates = new ArrayList<>();
 
-        //Add possible start and goal Nodes to a list
-        for(int i = 0; i < mazeArray.length; ++i){
-            if(!mazeArray[i].isBlocked()){
-                candidates.add(mazeArray[i]);
-                candidates.add(mazeArray[i]);
+        //Randomly select which quadrant to start in
+        //Goalquadrant is on the opposite side
+        int startQuadrant = randomGenerator.nextInt(4);
+        int goalQuadrant;
+        if(startQuadrant % 2 == 0){
+            goalQuadrant = (startQuadrant + 3) % 4;
+        } else {
+            goalQuadrant = (startQuadrant + 1) % 4;
+        }
+
+        //Add possible start and goal Nodes to their respective lists
+        for(int i = 0;
+            i < mazeArray.length;
+            ++i){
+
+            if(i % sizeX / (sizeX / 2)  == startQuadrant % 2 &&
+                i / sizeX / (sizeY / 2) == startQuadrant / 2){
+                if(!mazeArray[i].isBlocked()){
+                    startCandidates.add(mazeArray[i]);
+                }
+            } else if(i % sizeX / (sizeX / 2)  == goalQuadrant % 2 &&
+                i / sizeX / (sizeY / 2) == goalQuadrant / 2){
+                if(!mazeArray[i].isBlocked()){
+                    goalCandidates.add(mazeArray[i]);
+                }
             }
         }
         //Select start and goal point randomly until
@@ -49,11 +70,14 @@ public class MazeGenerator{
 
         Node start, goal;
         do {
-            start = candidates.get(
-                randomGenerator.nextInt(candidates.size()));
-            goal = candidates.get(
-                randomGenerator.nextInt(candidates.size()));
+            start = startCandidates.get(
+                randomGenerator.nextInt(startCandidates.size()));
+            goal = goalCandidates.get(
+                randomGenerator.nextInt(goalCandidates.size()));
         } while(start.distanceTo(goal) < distance);
+
+        //System.out.println("Start - X: " + start.getX() + " Y: " + start.getY());
+        //System.out.println("Goal - X: " + goal.getX() + " Y: " + goal.getY());
 
 
         //Create a Maze object
@@ -61,8 +85,8 @@ public class MazeGenerator{
 
 
         //Check if solveable
-        Search dfsCheck = new DepthFirstSearch(maze);
-        if(!dfsCheck.search()){
+        Search check = new BreadthFirstSearch(maze);
+        if(!check.search()){
             return null;
         }
 

@@ -1,15 +1,15 @@
-import java.util.Stack;
+import java.util.LinkedList;
 
 /**
  * Depth first search
  */
-public class DepthFirstSearch implements Search{
+public class BreadthFirstSearch implements Search{
     private Maze maze;
 
     /**
      * Class constructor, saves the maze
      */
-    public DepthFirstSearch(Maze maze){
+    public BreadthFirstSearch(Maze maze){
         this.maze = maze;
     }
 
@@ -20,23 +20,24 @@ public class DepthFirstSearch implements Search{
     @Override
     public boolean search(){
         //Set up stack for searching
-        Stack<Node> stack = new Stack<Node>();
+        LinkedList<Node> queue = new LinkedList<Node>();
         Node start = maze.getStart();
         Node goal = maze.getGoal();
-        stack.push(start);
+        queue.add(start);
 
 
 
         //Start searching stack
         long timeStart = System.nanoTime();
-        while(!stack.empty()){
+        while(!queue.isEmpty()){
             //Check if search has taken too long
             if(System.nanoTime() - timeStart > 100_000){
                 System.out.println("Too long");
+                return false;
             } else {
                 //System.out.println("Time: " + (System.nanoTime() - timeStart));
             }
-            Node node = stack.pop();
+            Node node = queue.remove();
 
             if(!node.isVisited() && !node.isBlocked()){
                 //Check if goal has been reached
@@ -50,7 +51,7 @@ public class DepthFirstSearch implements Search{
                 Node[] neighbours = maze.getNeighbours(node);
                 for(int i = 0; i < neighbours.length; ++i){
                     if(neighbours[i] != null){
-                        stack.push(neighbours[i]);
+                        queue.add(neighbours[i]);
                     }
                 }
             }
