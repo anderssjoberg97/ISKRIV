@@ -44,18 +44,34 @@ public class DepthFirstGenerator implements Generator{
         ArrayList<GenNode> history = new ArrayList<GenNode>();
         //Set a radnom starting point
         GenNode start = maze[randomGenerator.nextInt(maze.length)];
-        //ArrayList which stores potential goals
-        ArrayList<GenNode> goalCandidates = new ArrayList<GenNode>();
+        //ArrayList which stores potential starting points and goals
+        ArrayList<GenNode> candidates = new ArrayList<GenNode>();
         //Add starting point to stack
         stack.push(start);
 
-
+        //For time logging
+        long lastPrint = System.nanoTime();
         //Start generating maze
         while(!stack.empty()){
+            //If enough time has passed calculate a percentage done
+            if(System.nanoTime() - lastPrint > 1_000_000_000){
+                lastPrint = System.nanoTime();
+                int c = 0;
+                for(int i = 0; i < maze.length; ++i){
+                    if(maze[i].isVisited()){
+                        ++c;
+                    }
+                }
+                double percentage = (double)c * 200 / (sizeX * sizeY);
+                System.out.println("Generating - " + percentage + "%");
+            }
             //Get first GenNode in stack
             GenNode node = stack.pop();
             //Store node in history
             history.add(node);
+            /*for(GenNode hisNode : history){
+                System.out.println(hisNode.getX() + " " + hisNode.getY());
+            }*/
             //Mark node as visited
             node.setVisited(true);
             //Unblock node
@@ -70,7 +86,7 @@ public class DepthFirstGenerator implements Generator{
                 neighbours.get(which)[0].setBlocked(false);
                 stack.push(neighbours.get(which)[1]);
             } else {
-                goalCandidates.add(node);
+                candidates.add(node);
                 //Step back until a node which has free neighbours is reached
                 for(int i = history.size() - 1; i >= 0; --i){
                     if(getNeighbours(
@@ -84,9 +100,13 @@ public class DepthFirstGenerator implements Generator{
             }
         }
 
-        //Randomly select a goal
-        GenNode goal = goalCandidates.get(
-            randomGenerator.nextInt(goalCandidates.size()));
+        //Randomly select a start and goal
+        GenNode goal = candidates.get(
+            randomGenerator.nextInt(candidates.size()));
+        do {
+            start = candidates.get(
+                randomGenerator.nextInt(candidates.size()));
+        } while(start.equals(goal));
 
         //Convert the GenNode array to a Maze
         return convertToMaze(maze, sizeX, sizeY, start, goal);
@@ -155,6 +175,7 @@ public class DepthFirstGenerator implements Generator{
         }
         //Check left neighbour
         if((position - 2)  / sizeX == position / sizeX &&
+            (position - 2) >= 0 &&
             !maze[position - 2].isVisited() &&
             !maze[position - 1].isVisited()){
             GenNode[] freeNodes = new GenNode[2];

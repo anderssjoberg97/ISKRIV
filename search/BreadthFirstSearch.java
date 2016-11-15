@@ -1,6 +1,7 @@
 package anderssjoberg.maze.search;
 
 import java.util.LinkedList;
+import java.util.ArrayList;
 
 import anderssjoberg.maze.Maze;
 import anderssjoberg.maze.Node;
@@ -10,12 +11,17 @@ import anderssjoberg.maze.Node;
  */
 public class BreadthFirstSearch implements Search{
     private Maze maze;
+    private long timeElapsed;
+    private ArrayList<Node> history;
 
     /**
      * Class constructor, saves the maze
      */
     public BreadthFirstSearch(Maze maze){
         this.maze = maze;
+        timeElapsed = 0;
+
+        history = new ArrayList<Node>();
     }
 
     /**
@@ -35,29 +41,21 @@ public class BreadthFirstSearch implements Search{
         //Start searching stack
         long timeStart = System.nanoTime();
         while(!queue.isEmpty()){
-            //Check if search has taken too long
-            if(System.nanoTime() - timeStart > 100_000){
-                System.out.println("Too long");
-                return false;
-            } else {
-                //System.out.println("Time: " + (System.nanoTime() - timeStart));
-            }
             Node node = queue.remove();
 
             if(!node.isVisited() && !node.isBlocked()){
                 //Check if goal has been reached
                 if(node.equals(goal)){
+                    timeElapsed = System.nanoTime() - timeStart;
                     return true;
                 }
 
                 //Mark node as visited
                 node.setVisited(true);
                 //Add neighbours to stack
-                Node[] neighbours = maze.getNeighbours(node);
-                for(int i = 0; i < neighbours.length; ++i){
-                    if(neighbours[i] != null){
-                        queue.add(neighbours[i]);
-                    }
+                ArrayList<Node> neighbours = maze.getNeighbours(node);
+                for(int i = 0; i < neighbours.size(); ++i){
+                        queue.add(neighbours.get(i));
                 }
             }
 
@@ -65,5 +63,23 @@ public class BreadthFirstSearch implements Search{
 
 
         return false;
+    }
+
+    /**
+     * Gets the time elapsed searching
+     * @return Time elapsed in nanoseconds
+     */
+    @Override
+    public long getTime(){
+        return timeElapsed;
+    }
+
+    /**
+     * Gets path history
+     * @return Path history
+     */
+    @Override
+    public ArrayList<Node> getHistory(){
+        return history;
     }
 }
