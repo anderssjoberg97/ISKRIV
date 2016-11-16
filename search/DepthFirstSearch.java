@@ -64,7 +64,7 @@ public class DepthFirstSearch implements Search{
                         if(maze.getNeighbours(history.get(i)).size() > 0){
                             break;
                         } else {
-                                history.remove(history.get(i));
+                                history.remove(i);
                         }
 
                     }

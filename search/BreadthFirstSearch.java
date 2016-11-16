@@ -38,10 +38,12 @@ public class BreadthFirstSearch implements Search{
 
 
 
-        //Start searching stack
+        //Start searching queue
         long timeStart = System.nanoTime();
+        int level = 1;
         while(!queue.isEmpty()){
             Node node = queue.remove();
+            history.add(node);
 
             if(!node.isVisited() && !node.isBlocked()){
                 //Check if goal has been reached

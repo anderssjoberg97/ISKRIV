@@ -20,7 +20,7 @@ public class FileHandler{
 
         try{
             PrintWriter writer = new PrintWriter(
-                "build/anderssjoberg/maze/mazes/" + fileName, "UTF-8");
+                "build/anderssjoberg/maze/" + fileName, "UTF-8");
             for(String row : content){
                 writer.println(row);
             }

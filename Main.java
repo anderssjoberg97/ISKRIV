@@ -17,16 +17,37 @@ public class Main{
 
     public Main(){
         mazeGenerator = new MazeGenerator();
-        //generateMazes(256, 256, 1000);
-        Maze maze = new Maze("sizeX128sizeY128/sizeX128sizeY128num223.maze");
-
-        Search search = new DepthFirstSearch(maze);
-
+        Maze maze = new Maze("sizeX16sizeY16/sizeX16sizeY16num223.maze");
+        printMaze(maze);
+        Search search = new BreadthFirstSearch(maze);
         if(search.search()){
-            printMaze(maze);
-            long timeElapsed = System.out.println(search.getTime());
+            System.out.println("Done");
             ArrayList<Node> history = search.getHistory();
+            for(int i = 0; i < history.size(); ++i){
+                System.out.println(history.get(i).getX() + " " + history.get(i).getY());
+            }
         }
+
+
+        /*ArrayList<String> out = new ArrayList<String>();
+
+        for(int i = 0; i < 1000; ++i){
+            Maze maze = new Maze("sizeX128sizeY128/sizeX128sizeY128num" + i + ".maze");
+
+            Search search = new DepthFirstSearch(maze);
+
+            if(search.search()){
+                printMaze(maze);
+                long timeElapsed = search.getTime();
+                ArrayList<Node> history = search.getHistory();
+                System.out.println("Maze(" + i + ") - " + i + " Time: " + timeElapsed + " Moves: " + history.size());
+                out.add(i + ";" + timeElapsed + ";" + history.size());
+            }
+        }
+
+        FileHandler.save("results/DFS128.csv", out);*/
+
+
 
     }
 
@@ -36,7 +57,7 @@ public class Main{
             System.out.println(i);
             Maze maze = mazeGenerator.generateMaze(sizeX, sizeY);
             printMaze(maze);
-            saveMaze(maze, "sizeX" + sizeX +
+            saveMaze(maze, "mazes/sizeX" + sizeX +
                 "sizeY" + sizeY +
                 "/sizeX" + sizeX +
                 "sizeY" + sizeY +
