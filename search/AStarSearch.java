@@ -8,9 +8,9 @@ import anderssjoberg.maze.Node;
 import anderssjoberg.maze.TreeNode;
 
 /**
- * Depth first search
+ * A* search
  */
-public class BreadthFirstSearch implements Search{
+public class AStarSearch implements Search{
     private Maze maze;
     private long timeElapsed;
     private ArrayList<Node> history;
@@ -18,7 +18,7 @@ public class BreadthFirstSearch implements Search{
     /**
      * Class constructor, saves the maze
      */
-    public BreadthFirstSearch(Maze maze){
+    public AStarSearch(Maze maze){
         this.maze = maze;
         timeElapsed = 0;
 
@@ -26,7 +26,7 @@ public class BreadthFirstSearch implements Search{
     }
 
     /**
-     * Starts the DFS-search
+     * Starts the A*-search
      * @return Returns true if goal was reached, otherwise false
      */
     @Override

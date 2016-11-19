@@ -16,8 +16,11 @@ public class Main{
     }
 
     public Main(){
+        int size = 32;
+        int num = 223;
+
         mazeGenerator = new MazeGenerator();
-        Maze maze = new Maze("sizeX16sizeY16/sizeX16sizeY16num223.maze");
+        Maze maze = new Maze("sizeX" + size + "sizeY" + size + "/sizeX" + size + "sizeY" + size + "num" + num + ".maze");
         printMaze(maze);
         Search search = new BreadthFirstSearch(maze);
         if(search.search()){
