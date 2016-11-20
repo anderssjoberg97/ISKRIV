@@ -87,41 +87,9 @@ public class AStarSearch implements Search{
                 node.setVisited(true);
                 //Add neighbours to stack
                 ArrayList<Node> neighbours = maze.getNeighbours(node);
-                //Sort the neighbours by distance
-                if(neighbours.size()>0){
-                    ArrayList<Node> neighboursOrdered = new ArrayList<Node>();
-                    neighboursOrdered.add(neighbours.get(0));
-                    for(int i = 1; i < neighbours.size(); ++i){
-                        int distance = (int)Math.pow(
-                                neighbours.get(i).getX() -
-                                maze.getGoal().getX()
-                                , 2) +
-                            (int)Math.pow(
-                                neighbours.get(i).getY() -
-                                maze.getGoal().getY()
-                                , 2);
-                        int stopAtIndex = neighboursOrdered.size();
-                        for(int j = 0; j < stopAtIndex; ++j){
-                            int distance2 = (int)Math.pow(
-                                    neighboursOrdered.get(j).getX() -
-                                    maze.getGoal().getX()
-                                    , 2) +
-                                (int)Math.pow(
-                                    neighboursOrdered.get(j).getY() -
-                                    maze.getGoal().getY()
-                                    , 2);
-                            if(distance < distance2){
-                                neighboursOrdered.add(j, neighbours.get(i));
-                                break;
-                            } else if(j == neighboursOrdered.size() - 1){
-                                neighboursOrdered.add(neighbours.get(i));
-                            }
-                        }
-                    }
-                    for(int i = 0; i < neighboursOrdered.size(); ++i){
-                            tree.add(new TreeNode(neighboursOrdered.get(i), treeNode));
-                            queue.add(neighboursOrdered.get(i));
-                    }
+                for(int i = 0; i < neighbours.size(); ++i){
+                        tree.add(new TreeNode(neighbours.get(i), treeNode));
+                        queue.add(neighbours.get(i));
                 }
             }
 
