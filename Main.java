@@ -7,6 +7,7 @@ import anderssjoberg.maze.Maze;
 import anderssjoberg.maze.search.Search;
 import anderssjoberg.maze.search.DepthFirstSearch;
 import anderssjoberg.maze.search.BreadthFirstSearch;
+import anderssjoberg.maze.search.AStarSearch;
 import anderssjoberg.maze.generation.FileHandler;
 
 public class Main{
@@ -16,19 +17,58 @@ public class Main{
     }
 
     public Main(){
-        int size = 32;
-        int num = 223;
+        int size = 256;
+        int num = 1;
 
         mazeGenerator = new MazeGenerator();
-        Maze maze = new Maze("sizeX" + size + "sizeY" + size + "/sizeX" + size + "sizeY" + size + "num" + num + ".maze");
-        printMaze(maze);
-        Search search = new BreadthFirstSearch(maze);
-        if(search.search()){
-            System.out.println("Done");
-            ArrayList<Node> history = search.getHistory();
+        Maze maze1 = new Maze("sizeX" + size + "sizeY" + size + "/sizeX" + size + "sizeY" + size + "num" + num + ".maze");
+        Maze maze2 = new Maze("sizeX" + size + "sizeY" + size + "/sizeX" + size + "sizeY" + size + "num" + num + ".maze");
+        Maze maze3 = new Maze("sizeX" + size + "sizeY" + size + "/sizeX" + size + "sizeY" + size + "num" + num + ".maze");
+        printMaze(maze1);
+        //Set up searches
+        Search dfs = new DepthFirstSearch(maze1);
+        Search bfs = new BreadthFirstSearch(maze2);
+        Search aStar = new AStarSearch(maze3);
+
+        if(dfs.search()){
+            System.out.println("DFS done, results: ");
+            ArrayList<Node> history = dfs.getHistory();
+
+            System.out.println("Time: " + dfs.getTime() + " Moves: " + history.size());
+            String moveString = "";
             for(int i = 0; i < history.size(); ++i){
-                System.out.println(history.get(i).getX() + " " + history.get(i).getY());
+                moveString += "(" + history.get(i).getX() + ";" +
+                    + history.get(i).getY() + "), ";
             }
+            //System.out.println(moveString);
+            System.out.println("----------------------------------------");
+        }
+        if(bfs.search()){
+            System.out.println("BFS done, results: ");
+            ArrayList<Node> history = bfs.getHistory();
+
+            System.out.println("Time: " + bfs.getTime() + " Moves: " + history.size());
+            String moveString = "";
+            for(int i = 0; i < history.size(); ++i){
+                moveString += "(" + history.get(i).getX() + ";" +
+                    + history.get(i).getY() + "), ";
+            }
+            //System.out.println(moveString);
+            System.out.println("----------------------------------------");
+        }
+
+        if(aStar.search()){
+            System.out.println("A* done, results: ");
+            ArrayList<Node> history = aStar.getHistory();
+
+            System.out.println("Time: " + aStar.getTime() + " Moves: " + history.size());
+            String moveString = "";
+            for(int i = 0; i < history.size(); ++i){
+                moveString += "(" + history.get(i).getX() + ";" +
+                    + history.get(i).getY() + "), ";
+            }
+            //System.out.println(moveString);
+            System.out.println("----------------------------------------");
         }
 
 

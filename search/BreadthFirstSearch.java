@@ -46,6 +46,7 @@ public class BreadthFirstSearch implements Search{
 
 
         while(!queue.isEmpty()){
+
             Node node = queue.remove();
 
             //Find this node in tree
@@ -67,6 +68,7 @@ public class BreadthFirstSearch implements Search{
                         history.add(0, treeNode.getNode());
                         treeNode = treeNode.getParent();
                     }
+                    history.add(0, start);
 
                     return true;
                 }
@@ -76,8 +78,8 @@ public class BreadthFirstSearch implements Search{
                 //Add neighbours to stack
                 ArrayList<Node> neighbours = maze.getNeighbours(node);
                 for(int i = 0; i < neighbours.size(); ++i){
-                        tree.add(new TreeNode(neighbours.get(i), treeNode));
-                        queue.add(neighbours.get(i));
+                    tree.add(new TreeNode(neighbours.get(i), treeNode));
+                    queue.add(neighbours.get(i));
                 }
             }
 

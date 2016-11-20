@@ -37,6 +37,7 @@ public class AStarSearch implements Search{
         Node goal = maze.getGoal();
         queue.add(start);
 
+
         //Set up a tree structure
         ArrayList<TreeNode> tree = new ArrayList<TreeNode>();
         tree.add(new TreeNode(start));
@@ -46,7 +47,17 @@ public class AStarSearch implements Search{
 
 
         while(!queue.isEmpty()){
-            Node node = queue.remove();
+            //Pop the element which has the shortest distance to goal
+            Node node = queue.get(0);
+            int shortestDistance = distanceToGoal(node);
+            for(int i = 1; i < queue.size(); ++i){
+                int tempDistance = distanceToGoal(queue.get(i));
+                if(tempDistance < shortestDistance){
+                    node = queue.get(i);
+                    shortestDistance = tempDistance;
+                }
+            }
+            queue.remove(node);
 
             //Find this node in tree
             TreeNode treeNode = null;
@@ -67,6 +78,7 @@ public class AStarSearch implements Search{
                         history.add(0, treeNode.getNode());
                         treeNode = treeNode.getParent();
                     }
+                    history.add(0, start);
 
                     return true;
                 }
@@ -75,9 +87,41 @@ public class AStarSearch implements Search{
                 node.setVisited(true);
                 //Add neighbours to stack
                 ArrayList<Node> neighbours = maze.getNeighbours(node);
-                for(int i = 0; i < neighbours.size(); ++i){
-                        tree.add(new TreeNode(neighbours.get(i), treeNode));
-                        queue.add(neighbours.get(i));
+                //Sort the neighbours by distance
+                if(neighbours.size()>0){
+                    ArrayList<Node> neighboursOrdered = new ArrayList<Node>();
+                    neighboursOrdered.add(neighbours.get(0));
+                    for(int i = 1; i < neighbours.size(); ++i){
+                        int distance = (int)Math.pow(
+                                neighbours.get(i).getX() -
+                                maze.getGoal().getX()
+                                , 2) +
+                            (int)Math.pow(
+                                neighbours.get(i).getY() -
+                                maze.getGoal().getY()
+                                , 2);
+                        int stopAtIndex = neighboursOrdered.size();
+                        for(int j = 0; j < stopAtIndex; ++j){
+                            int distance2 = (int)Math.pow(
+                                    neighboursOrdered.get(j).getX() -
+                                    maze.getGoal().getX()
+                                    , 2) +
+                                (int)Math.pow(
+                                    neighboursOrdered.get(j).getY() -
+                                    maze.getGoal().getY()
+                                    , 2);
+                            if(distance < distance2){
+                                neighboursOrdered.add(j, neighbours.get(i));
+                                break;
+                            } else if(j == neighboursOrdered.size() - 1){
+                                neighboursOrdered.add(neighbours.get(i));
+                            }
+                        }
+                    }
+                    for(int i = 0; i < neighboursOrdered.size(); ++i){
+                            tree.add(new TreeNode(neighboursOrdered.get(i), treeNode));
+                            queue.add(neighboursOrdered.get(i));
+                    }
                 }
             }
 
@@ -103,5 +147,20 @@ public class AStarSearch implements Search{
     @Override
     public ArrayList<Node> getHistory(){
         return history;
+    }
+
+    /**
+     * Calculates the distance to the goal
+     * @param node The node to start from
+     */
+    public int distanceToGoal(Node node){
+        return (int)Math.pow(
+                node.getX() -
+                maze.getGoal().getX()
+                , 2) +
+            (int)Math.pow(
+                node.getY() -
+                maze.getGoal().getY()
+                , 2);
     }
 }
