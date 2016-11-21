@@ -88,8 +88,8 @@ public class AStarSearch implements Search{
                 //Add neighbours to stack
                 ArrayList<Node> neighbours = maze.getNeighbours(node);
                 for(int i = 0; i < neighbours.size(); ++i){
-                        tree.add(new TreeNode(neighbours.get(i), treeNode));
-                        queue.add(neighbours.get(i));
+                    tree.add(new TreeNode(neighbours.get(i), treeNode));
+                    queue.add(neighbours.get(i));
                 }
             }
 

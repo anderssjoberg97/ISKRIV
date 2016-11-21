@@ -2,6 +2,7 @@ package anderssjoberg.maze.generation;
 
 import anderssjoberg.maze.generation.Generator;
 import anderssjoberg.maze.generation.DepthFirstGenerator;
+import anderssjoberg.maze.generation.FieldGenerator;
 import anderssjoberg.maze.Maze;
 
 /**
@@ -15,7 +16,8 @@ public class MazeGenerator{
      * Class constructor
      */
     public MazeGenerator(){
-        generator = new DepthFirstGenerator();
+        //generator = new DepthFirstGenerator();
+        generator = new FieldGenerator();
     }
 
     /**

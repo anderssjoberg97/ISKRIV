@@ -35,7 +35,7 @@ public class FileHandler{
         File file;
         ArrayList<String> mazeContent = new ArrayList<String>();
         try{
-            file = new File("build/anderssjoberg/maze/mazes/" + fileName);
+            file = new File("build/anderssjoberg/maze/" + fileName);
             try(BufferedReader br = new BufferedReader(new FileReader(file))){
                 String line;
                 while((line = br.readLine()) != null){

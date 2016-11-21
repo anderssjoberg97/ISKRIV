@@ -17,13 +17,15 @@ public class Main{
     }
 
     public Main(){
-        int size = 256;
-        int num = 1;
-
         mazeGenerator = new MazeGenerator();
-        Maze maze1 = new Maze("sizeX" + size + "sizeY" + size + "/sizeX" + size + "sizeY" + size + "num" + num + ".maze");
-        Maze maze2 = new Maze("sizeX" + size + "sizeY" + size + "/sizeX" + size + "sizeY" + size + "num" + num + ".maze");
-        Maze maze3 = new Maze("sizeX" + size + "sizeY" + size + "/sizeX" + size + "sizeY" + size + "num" + num + ".maze");
+
+        int size = 128;
+        int num = 221;
+
+
+        Maze maze1 = new Maze("fields/sizeX" + size + "sizeY" + size + "/sizeX" + size + "sizeY" + size + "num" + num + ".maze");
+        Maze maze2 = new Maze("fields/sizeX" + size + "sizeY" + size + "/sizeX" + size + "sizeY" + size + "num" + num + ".maze");
+        Maze maze3 = new Maze("fields/sizeX" + size + "sizeY" + size + "/sizeX" + size + "sizeY" + size + "num" + num + ".maze");
         printMaze(maze1);
         //Set up searches
         Search dfs = new DepthFirstSearch(maze1);
@@ -71,7 +73,6 @@ public class Main{
             System.out.println("----------------------------------------");
         }
 
-
         /*ArrayList<String> out = new ArrayList<String>();
 
         for(int i = 0; i < 1000; ++i){
@@ -100,7 +101,7 @@ public class Main{
             System.out.println(i);
             Maze maze = mazeGenerator.generateMaze(sizeX, sizeY);
             printMaze(maze);
-            saveMaze(maze, "mazes/sizeX" + sizeX +
+            saveMaze(maze, "fields/sizeX" + sizeX +
                 "sizeY" + sizeY +
                 "/sizeX" + sizeX +
                 "sizeY" + sizeY +
